@@ -40,7 +40,77 @@
 
 5. 配置skyDNS，kube2sky。DomeOS的公开镜像仓库中提供了两者的镜像。DomeOS提供安装两者的YAML文件，Kubectl可以根据YAML文件创建两者。您可以根据自身需求修改YAML文件配置项，如：etcd地址、etcd domain、DomeOS server地址。
 
- YAML文件下载地址：app.domeos.org/dns.yaml
+ YAML文件：
+       apiVersion: v1
+       kind: ReplicationController
+       metadata:
+         name: skydns
+         labels:
+           app: skydns
+           version: v9
+       spec:
+         replicas: 1
+         selector:
+           app: skydns
+           version: v9
+         template:
+           metadata:
+             labels:
+               app: skydns
+               version: v9
+           spec:
+             containers:
+               - name: skydns
+                 image: pub.domeos.org/domeos/skydns:1.2
+                 command:
+                   - "/skydns"
+                 args:
+                   - "--machines=http://1.1.1.1:1111"
+                   - "--domain=domeos.local"
+                   - "--addr=0.0.0.0:53"
+                 ports:
+                   - containerPort: 53
+                     hostPort: 53
+                     name: dns-udp
+                     protocol: UDP
+                   - containerPort: 53
+                     hostPort: 53
+                     name: dns-tcp
+                     protocol: TCP
+                 dnsPolicy: ClusterFirst
+                 hostNetwork: true
+                 restartPolicy: Always
+       ---
+       apiVersion: v1
+       kind: ReplicationController
+       metadata:
+         name: kube2sky
+         labels:
+           app: kube2sky
+           version: v9
+       spec:
+         replicas: 1
+         selector:
+           app: kube2sky
+           version: v9
+         template:
+           metadata:
+             labels:
+               app: kube2sky
+               version: v9
+           spec:
+             containers:
+              - name: kube2sky
+                 image: pub.domeos.org/domeos/kube2sky:1.1
+                 command:
+                   - "/kube2sky"
+                 args:
+                   - "--etcd-server=http://1.1.1.1:1111"
+                   - "--domain=domeos.local"
+                   - "--kube_master_url=http://1.1.1.1:8080"
+                 dnsPolicy: ClusterFirst
+                 restartPolicy: Always
+
 
 6. 启动MySQL，建议通过传统方式启动而非镜像启动。启动MySQL时，需要创建三个数据库：domeos,graph, dashboard，并创建一个用户拥有这三个库的权限。
 
