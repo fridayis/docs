@@ -30,5 +30,5 @@
    * [集群成员](ji_qun_cheng_yuan.md)
 * [组管理](zu_guan_li.md)
 * [应用商店](ying_yong_shang_dian.md)
-* 私有仓库对接搜狐云存储
+* [私有仓库对接搜狐云存储](si_you_cang_ku_dui_jie_sou_hu_yun_cun_chu.md)
 
