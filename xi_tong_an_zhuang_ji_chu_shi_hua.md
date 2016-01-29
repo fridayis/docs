@@ -119,7 +119,7 @@
    
    agent和监控四个组件的工作逻辑：
    1. agent上报信息给transfer；
-   2. ransfer将信息传递给graph存储；
+   2. transfer将信息传递给graph存储；
    3. query从graph里查询信息；
    4. dashboard把从query里查询的信息做图形化展示。
    
