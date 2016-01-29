@@ -111,7 +111,6 @@
                  dnsPolicy: ClusterFirst
                  restartPolicy: Always
 
-
 6. 启动MySQL，建议通过传统方式启动而非镜像启动。启动MySQL时，需要创建三个数据库：domeos,graph, dashboard，并创建一个用户拥有这三个库的权限。
 
 7. 启动监控需要的四个组件：transfer、graph、query、dashboard。DomeOS公开镜像仓库提供镜像。 transfer和query中配置的graph信息需要保持一致。
