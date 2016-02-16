@@ -18,7 +18,7 @@
 
 安装步骤：
 
-1. 如果您的私有仓库通过http访问，在第1步用DomeOS公开镜像仓库提供的镜像或Docker Hub官方镜像启动私有仓库，该私有仓库在您的Kubernetes集群外部。如果您的私有仓库通过https访问，需要在第4步安装Kubernetes时，通过Kubernetes启动私有仓库。
+1. 用DomeOS公开镜像仓库提供的镜像或Docker Hub官方镜像（请务必使用v2版本的registry镜像）启动私有仓库。该仓库在您的Kubernetes集群外部。如果您的私有仓库通过http访问，在第4步重启docker时配置相关参数。
 
 2. 安装并启动etcd集群。详细步骤见etcd官方网站。
 
