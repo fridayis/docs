@@ -27,7 +27,7 @@ admin用户的电子邮箱和密码，可以在全局配置的“用户管理”
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject2.jpg)
 
 ##3. 代码仓库
-DomeOS支持关联代码仓库，用于关联代码并构建成项目。目前DomeOS支持关联Gitlab。您需要填写您的Gitlab地址。
+DomeOS支持关联代码仓库，用于关联代码并构建成项目。目前DomeOS支持关联Gitlab。您需要填写您的Gitlab地址。之后DomeOS会支持更多的代码仓库。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject3.jpg)
 
 ##4. 私有仓库
