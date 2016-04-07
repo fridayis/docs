@@ -31,11 +31,11 @@ DomeOS支持关联代码仓库，用于关联代码并构建成项目。目前Do
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject3.jpg)
 
 ##4. 私有仓库
-在这里您需要告知系统安装时启动的私有仓库的地址。如果私有仓库需要通过https访问，则需要勾选“https”并输入证书信息。
+在这里您需要告知系统安装时启动的Docker registry的地址，样例: http://10.11.150.76:5000。如果私有仓库需要通过https访问，则需要勾选“https”并输入证书信息。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject4.jpg)
 
 ##5. 服务器
-在这里您需要填写DomeOS API服务器的访问地址。需要和系统安装时的配置保持一致。
+在这里您需要填写DomeOS Server的地址，样例:http://10.11.150.76:8080。需要和系统安装时的配置保持一致。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject5.jpg)
 
 ##6. 监控配置
@@ -46,4 +46,9 @@ DomeOS支持关联代码仓库，用于关联代码并构建成项目。目前Do
 如果希望通过Web前端直接登录容器，请填写Web服务容器的访问地址。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject7.jpg)
 
+##8. 构建集群
+如果想成功启动项目构建，则kubernetes集群需要被添加到集群管理中，并且配置其中的至少一台主机可以用于构建，请在添加完集群后完成构建集群的配置：
+1. kube-apiserver服务地址，样例:10.16.42.200:8080
+2. kubernetes集群的namespace，默认为default
+![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject67.jpg)
 
