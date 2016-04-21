@@ -24,7 +24,7 @@
    * [基础镜像](ji_chu_jing_xiang.md)
    * [项目镜像](xiang_mu_jing_xiang.md)
    * [非项目镜像](fei_xiang_mu_jing_xiang.md)
-   * 镜像定制工具
+   * [镜像定制工具](jing_xiang_ding_zhi_gong_ju.md)
 * [集群管理](ji_qun_guan_li.md)
    * [新建集群](xin_jian_ji_qun.md)
    * [集群详情和设置](ji_qun_xiang_qing_he_she_zhi.md)
