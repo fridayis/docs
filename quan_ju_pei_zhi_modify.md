@@ -31,11 +31,14 @@ DomeOS支持关联代码仓库，用于关联代码并构建成项目。目前Do
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject3.jpg)
 
 ##4. 私有仓库
-在这里您需要告知系统安装时启动的Docker registry的地址，样例: http://10.11.150.76:5000。如果私有仓库需要通过https访问，则需要勾选“https”并输入证书信息。
+在这里您需要告知系统安装时启动的Docker registry的地址，样例: 
+http://10.11.150.76:5000
+。如果私有仓库需要通过https访问，则需要勾选“https”并输入证书信息。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject4.jpg)
 
 ##5. 服务器
-在这里您需要填写DomeOS Server的地址，样例:http://10.11.150.76:8080。需要和系统安装时的配置保持一致。
+在这里您需要填写DomeOS Server的地址，样例:http://10.11.150.76:8080
+。需要和系统安装时的配置保持一致。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject5.jpg)
 
 ##6. 监控配置
