@@ -13,8 +13,7 @@
 | transfer | pub.domeos.org/domeos/falcon-transfer:0.0.14 |
 | graph | pub.domeos.org/domeos/falcon-graph:0.5.6 |
 | query | pub.domeos.org/domeos/falcon-query:1.4.3 |
-| dashboard | pub.domeos.org/domeos/falcon-dashboard:0.2 |
-| DomeOS server | pub.domeos.org/domeos/server:1.2.2 |
+| DomeOS server | pub.domeos.org/domeos/server:1.2.3 |
 
 安装步骤：
 
