@@ -2,6 +2,7 @@
 
 * [说明](README.md)
 * [DomeOS简介](domeos.md)
+* [版本记录](ban_ben_ji_lu.md)
 * [系统安装及初始化](xi_tong_an_zhuang_ji_chu_shi_hua.md)
    * [全局配置](quan_ju_pei_zhi_modify.md)
 * [私有仓库对接搜狐云存储](si_you_cang_ku_dui_jie_sou_hu_yun_cun_chu.md)
@@ -32,5 +33,4 @@
    * [集群成员](ji_qun_cheng_yuan.md)
 * [组管理](zu_guan_li.md)
 * [应用商店](ying_yong_shang_dian.md)
-* [版本记录](ban_ben_ji_lu.md)
 
