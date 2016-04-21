@@ -31,7 +31,11 @@ DomeOS支持关联私有Gitlab，您可以在新建项目第一步选择Gitlab�
 接下来您需要进行Dockerfile的配置，您可以选择手动配置，也可以点击“复制已有项目”来复制一个项目的Dockerfile配置。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject15.jpg)
 
-您可以在“高级设置”中指定配置文件模板，上传文件（如配置文件）以及运行相关的其他配置。
+您可以在“高级设置”中指定配置文件模板，设定运行过程环境变量等信息。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject16.jpg)
+
+如果开启“使用代码项目内Dockerfile”，则需要进行如下配置：
+提示：dockerfile 名称可以根据代码内dockerfile文件名称自行修改
+![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject78.jpg)
 
 完成所有配置后，点击“完成创建”，成功创建一个新项目。
