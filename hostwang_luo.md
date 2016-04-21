@@ -14,7 +14,7 @@ domeize项目地址：https://github.com/crystalharp/domeize
   domeize地址：https://github.com/crystalharp/domeize
 4. 执行构建，项目镜像中包含用户的配置文件模板和domeize
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject17.jpg)
-5. 新建部署，选择镜像后，在网络模式中选择“host模式”，并指定对外暴露的端口个数。
+5. 新建部署，选择镜像后，在网络模式中选择“host模式”，并在访问设置中指定对外暴露的端口个数。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject69.jpg)
 至此，一个host网络模式的部署就建立成功了。
 
