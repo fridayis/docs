@@ -1,6 +1,6 @@
 # Host网络
 
-背景介绍：
+#1. 背景介绍：
 DomeOS 0.2版本提供了host网络模式的部署方式。host网络主要提升了部署的对外服务性能，避免了kube-proxy在ip table转发过程上损失性能。如果想在host网络模式下部署，需要在镜像中添加DomeOS提供的插件——domeize。
 
 domeize项目地址：https://github.com/crystalharp/domeize
