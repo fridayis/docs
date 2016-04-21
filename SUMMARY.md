@@ -33,5 +33,4 @@
 * [组管理](zu_guan_li.md)
 * [应用商店](ying_yong_shang_dian.md)
 * 版本记录
-* 版本记录
 
