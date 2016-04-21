@@ -7,12 +7,12 @@
 | 安装组件| 镜像地址 |
 | -- | -- |
 | 私有仓库 | pub.domeos.org/domeos/docker-registry-driver-sohustorage:1.0 |
-| skyDNS | pub.domeos.org/domeos/skydns:1.4|
-| kube2sky | pub.domeos.org/domeos/kube2sky:0.3 |
-| agent | pub.domeos.org/domeos/agent:2.3|
-| transfer | pub.domeos.org/domeos/falcon-transfer:0.0.14 |
-| graph | pub.domeos.org/domeos/falcon-graph:0.5.6 |
-| query | pub.domeos.org/domeos/falcon-query:1.4.3 |
+| skyDNS | pub.domeos.org/domeos/skydns:1.5|
+| kube2sky | pub.domeos.org/domeos/kube2sky:0.4 |
+| agent | pub.domeos.org/domeos/agent:2.4|
+| transfer | pub.domeos.org/domeos/transfer:0.0.15 |
+| graph | pub.domeos.org/domeos/graph:0.5.7 |
+| query | pub.domeos.org/domeos/query:1.5.1 |
 | DomeOS server | pub.domeos.org/domeos/server:1.2.3 |
 
 安装步骤：
