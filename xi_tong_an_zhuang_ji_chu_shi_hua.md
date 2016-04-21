@@ -159,11 +159,11 @@
     sudo docker run --restart=always -d -p 5000:5000 -e REGISTRY_STORAGE_SOHUSTORAGE_ACCESSKEY=f5ynwwOZ2k2yT4+qxzmA6A== -e REGISTRY_STORAGE_SOHUSTORAGE_SECRETKEY=MUC9NeF8vXvt0y2f+6dIXA== -e REGISTRY_STORAGE_SOHUSTORAGE_REGION=bjcnc -e REGISTRY_STORAGE_SOHUSTORAGE_BUCKET=registry --name private-registry pub.domeos.org/domeos/docker-registry-driver-sohustorage:1.0
 **步骤4：配置和启动MySQL，并创建所需数据库和表结构**
 
-数据库: dashboard, domeos, graph
+数据库: domeos, graph
 
 表结构: 
       
-    create-db.sql, dashboard-db-schema.sql, graph-db-schema.sql 
+    create-db.sql, graph-db-schema.sql 
 
 下载地址：https://github.com/domeos/server/tree/master/DomeOS/src/main/resources
 
@@ -184,7 +184,6 @@
   1. graph: pub.domeos.org/domeos/falcon-graph:0.5.6
   2. transfer: pub.domeos.org/domeos/falcon-transfer:0.0.14
   3. query: pub.domeos.org/domeos/falcon-query:1.4.3
-  4. dashboard: pub.domeos.org/domeos/falcon-dashboard:0.2
 
 命令:
 
@@ -198,9 +197,6 @@
 
 3. query: 
         sudo docker run -d -e GRAPH_CLUSTER=<_graph_cluster> -p <_query_port>:9966 --name query --restart=always pub.domeos.org/domeos/falcon-query:1.4.3
-
-4. dashboard: 
-        sudo docker run -d --name=dashboard -e DASHBOARD_DB_HOST="\"<_dashboard_db_host>\""  -e DASHBOARD_DB_PORT="<_dashboard_db_port>" -e DASHBOARD_DB_USER="\"<_dashboard_db_user>\"" -e DASHBOARD_DB_PASSWD="\"<_dashboard_db_password>\"" -e GRAPH_DB_HOST="\"<_graph_db_host>\"" -e GRAPH_DB_PORT="<_graph_db_port>" -e GRAPH_DB_USER="\"<_graph_db_user>\"" -e GRAPH_DB_PASSWD="\"<_graph_db_passwd>\"" -e QUERY_ADDR="\"<_query_addr>\"" -p <_dashboard_port>:8080 --restart=always pub.domeos.org/domeos/falcon-dashboard:0.2
 
 参数说明:
   
@@ -222,16 +218,7 @@
   
   _query_port: query服务端口。
   
-  _dashboard_db_host:
-  
-  _dashboard_db_port:
-  
-  _dashboard_db_user:
-  
-  _dashboard_db_password: 
-  
-  以上4个配置参数为服务于dashboard的MySQL数据库的相关参数。
-  
+
   _graph_db_host:
   
   _graph_db_port:
@@ -244,7 +231,6 @@
   
   _query_addr: query服务地址，格式必须为http://< ip >:< port >
   
-  _dashboard_port: dashboard服务端口。
 
 说明:
   1. 参数中需要转义双引号的地方不能省略。
@@ -265,10 +251,6 @@
   3. query: 
   
           sudo docker run -d -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 9967:9966 --name query --restart=always pub.domeos.org/domeos/falcon-query:1.4.3
-
-  4. dashboard: 
-  
-          sudo docker run -d --name=dashboard -e DASHBOARD_DB_HOST="\"10.11.10.10\""  -e DASHBOARD_DB_PORT="3307" -e DASHBOARD_DB_USER="\"domeos\"" -e DASHBOARD_DB_PASSWD="\"xxxx\"" -e GRAPH_DB_HOST="\"10.11.10.10\"" -e GRAPH_DB_PORT="3307" -e GRAPH_DB_USER="\"domeos\"" -e GRAPH_DB_PASSWD="\"xxxx\"" -e QUERY_ADDR="\"http://10.11.10.12:9967\"" -p 8090:8080 --restart=always pub.domeos.org/domeos/falcon-dashboard:0.2
 
 **步骤6：配置和启动WebSSH组件**
 
