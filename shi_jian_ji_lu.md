@@ -7,4 +7,12 @@ DomeOS的部署具有完整详细的事件记录，让您看到所有的历史�
 对于用户操作，除了基本信息，还能看到本次操作起始时的部署状态、目标的部署状态、以及操作最终完成的状态。
 
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject33.jpg)
+对于系统操作，在右侧显示本次操作的信息。
+
+reason：事件的触发原因
+
+count：事件的操作次数
+
+message：事件的详细信息
+
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject71.jpg)
