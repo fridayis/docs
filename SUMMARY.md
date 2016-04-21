@@ -31,7 +31,7 @@
    * [添加主机](tian_jia_zhu_ji.md)
    * [主机管理](zhu_ji_guan_li.md)
    * [集群成员](ji_qun_cheng_yuan.md)
-   * 删除主机
+   * [删除主机](shan_chu_zhu_ji.md)
 * [组管理](zu_guan_li.md)
 * [应用商店](ying_yong_shang_dian.md)
 
