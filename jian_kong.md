@@ -1,61 +1,32 @@
 # 监控
 ---
-DomeOS提供容器和主机级别的多维度监控。您可以在监控页面查看部署或主机的运行状态。
+DomeOS提供容器和主机级别的多维度监控。您可以在监控页面查看主机、实例或容器的运行状态。
 
 点击控制台左侧导航栏的“监控”，进入监控页。
 
-在监控对象栏选择监控类型。监控类型有“主机”和“容器”。
+在页面上方选择集群、监控类型、环境。监控类型可以选择“主机”和“实例”
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject40.jpg)
 
 ##1. 主机监控
-监控类型选择“主机”，并选择希望查看的集群，监控对象栏最下方会出现该集群的主机列表。您可以通过选择主机标签和搜索关键字来筛选出希望查看的主机。
+监控类型选择“主机”，页面下方会根据集群和环境选择，显示主机列表。您可以在列表中查看主机的基本信息和当前时间点的监控数据。
 
-选中希望查看的主机，点击“刷新监控指标列表”，即可在右侧“监控指标”栏看到所有的监控指标。
+您可以点击主机名，查看单个主机的监控详情；也可以勾选多台主机，点击“查看监控详情”查看所选主机的监控。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject41.jpg)
-
-选中希望查看的监控指标，点击“看图”，选择一种视角，即可在新页面查看监控。
+对于主机监控，目前提供CPU占用率、内存占用率、网络流入、网络流出、磁盘占用率、磁盘写入、磁盘读取的监控。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject42.jpg)
 
-主机各项监控指标意义如下：
 
-| 监控指标 | 意义 | 说明 |
-| -- | -- | -- |
-| agent.alive | 主机上agent存活情况 | “1”表示存活，“0”表示死亡。只有主机上agent正常运行，才能获取该主机的监控数据 |
-| cpu.busy| cpu使用率 | 反映了主机所用cpu占主机总cpu的百分比，不会超过100% |
-| mem.memtotal| 内存总量 | 主机的内存总量|
-| mem.memused | 内存使用量 | 主机的内存使用量 |
-| disk.io.read_bytes/device=xx | 磁盘读总量 | 单位KB/s，device为设备名 |
-| disk.io.write_bytes/device=xx | 磁盘写总量 | 单位KB/s，device为设备名|
-| df.bytes.used/fstype=xx,mount=xx | 磁盘使用量 | fstype为分区类型，mount为分区挂载点 |
-| df.bytes.total/fstype=xx,mount=xx| 磁盘总量 | fstype为分区类型，mount为分区挂载点 |
-| net.if.in.bytes/iface=xx | 网络接收带宽 | 单位KB/s，iface为网卡 |
-| net.if.out.bytes/iface=xx | 网络发送带宽 | 单位KB/s，iface为网卡 |
+##2. 实例和容器监控
+监控类型选择“实例”，页面下方根据所选集群、环境和部署显示该部署的实例列表
 
-
-
-##2. 容器监控
-监控类型选择“容器”，并选择希望查看的集群和容器所在部署。监控对象栏最下方会出现该部署的实例列表。
-
-选中希望查看的实例，此时您可以直接点击“刷新监控指标列表”，查看监控。
+您可以在实例列表查看实例当前的监控数据。可以点击实例名或勾选多个实例点击“查看监控详情”，进入实例监控详情页面
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject43.jpg)
 
-
-如果您希望查看实例内部的容器监控，请在选中实例后点击“查看容器”，进入所选实例的容器列表。
+对于实例和容器的监控，目前提供CPU占用率、内存占用率、网络流入、网络流出的监控。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject44.jpg)
 
-选中希望查看的容器，并点击“刷新监控指标列表”，在监控指标栏选中希望查看的指标，点击“看图”并选择视角，即可查看监控。
+可以在实例列表的“容器”中点击“查看”，可以看到实例内的容器信息。可以查看单个或多个容器的监控。
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject45.jpg)
 
 ![](http://881471b33d4f9.cdn.sohucs.com/q_mini/newproject46.jpg)
-
-实例和容器的各项监控指标意义如下：
-
-| 监控指标 | 意义 | 说明 |
-| -- | -- | -- |
-| container.cpu.usage.total/id=xx |cpu使用率| xx为container id，该项为实例或容器占所在主机的cpu百分比 |
-| container.memory.usage/id=xx |内存使用量 | 实例或容器的内存使用量|
-| container.memory.limit/id=xx | 内存限额 | 实例或容器所分配的内存限额 |
-| container.network.rxbytes | 网络接收带宽 | 单位为KB/s|
-| container.network.txbytes | 网络发送带宽 | 单位为KB/s |
-
 
