@@ -72,6 +72,6 @@ nginx.tmpl模版文件
 ##5. 注意事项
 使用host网络部署时，申请和分配端口都是针对pod（实例）级别，因此如果一个pod内有多个运行domeize的容器，会出现端口冲突的情况。所以如果一个部署需要使用host网络，需要保证一个pod内只有一个运行domeize的容器。
 
-对应到DomeOS控制台，则如果部署需要用host网络，在新建部署选择镜像时，只能选择一个含domeize的镜像。目前DomeOS提供的基础镜像都包含domeize
+对应到DomeOS控制台，则如果部署需要用host网络，在新建部署选择镜像时，只能选择一个含domeize的镜像。目前DomeOS提供的基础镜像都包含domeize。
 
 host网络的部署可以放心使用日志自动收集功能。因为DomeOS提供的flume镜像不含domeize，所以pod内的flume容器不会引起端口冲突。
