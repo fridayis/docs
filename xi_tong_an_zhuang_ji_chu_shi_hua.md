@@ -239,9 +239,9 @@ domeos, graph
 启动方式: docker容器
 
 镜像: 
-  1. graph: pub.domeos.org/domeos/falcon-graph:0.5.7
-  2. transfer: pub.domeos.org/domeos/falcon-transfer:0.0.15
-  3. query: pub.domeos.org/domeos/falcon-query:1.5.1
+  1. graph: pub.domeos.org/domeos/graph:0.5.7
+  2. transfer: pub.domeos.org/domeos/transfer:0.0.15
+  3. query: pub.domeos.org/domeos/query:1.5.1
 
 命令:
 
