@@ -21,21 +21,27 @@
 
     脚本: start_etcd.sh 
    
-  下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/start_etcd.sh
+  下载地址：http://domeos-script.bjctc.scs.sohucs.com/start_etcd.sh
 
     配置文件: etcd_node_list.conf
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/etcd_node_list.conf
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/etcd_node_list.conf
     
     可执行文件: etcd 
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/etcd
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/etcd
+
+    辅助文件: etcdctl 
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/etcdctl
 
 说明: 
-1.	下载上述三个文件并放在相同目录
+1.	上面给出的下载链接etcd版本为2.3.1，也可根据需要使用其它版本的etcd。
+2.	etcdctl主要用于后台查询和调试，非必需。
+2.	安装时需要将start_etcd.sh、etcd_node_list.conf、etcd放在相同目录下。
 2.	将用于部署ETCD集群的主机IP列表写入etcd_node_list.conf中，每行一个IP。
 3.	启动前请确认各主机的系统时间一致，如不一致请通过ntpdate进行校准，如 ntpdate ntp.sohu.com。
 4.	脚本中默认数据存储目录为脚本所在目录的etcd-data子目录下，默认peer port为4010，默认client port为4012，如果需要可以在脚本文件中的第二步进行修改。
 5.	如果主机中已安装过ETCD，则ETCD从低版本升级到高版本时，需要删除老数据文件（ETCD自身bug）。
 6.	使用方式：sudo sh start_etcd.sh <当前主机在etcd_node_list.conf中的位置，从1开始。
+7.	还没启动所有节点时会报找不到未启动节点的错误，属正常现象，所有节点启动后将不报该错误。
 
 样例: 
 
@@ -54,22 +60,43 @@
   
     在10.11.151.101主机上执行sudo sh start_etcd.sh 3
     
+测试:
+
+通过“ curl -L [结点IP]:[ETCD服务端口]/health ”查看各个节点服务状态，如果返回的health为true说明该节点上的ETCD正常。如：
+
+      ===============================
+      command: curl -L 10.11.151.97:4012/health
+      result : {"health": "true"}
+      ===============================
+参考:
+  ETCD官方地址(https://coreos.com/etcd/)
+
+    
 **步骤2：配置和启动kubernetes master端**
 
     脚本: start_master_centos.sh 
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/start_master_centos.sh
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/start_master_centos.sh
     
-    辅助脚本: change_hostname.sh 
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/change_hostname.sh
+    辅助脚本1: 
+    change_hostname.sh 
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/change_hostname.sh
+    
+    辅助脚本2: 
+    clean-k8s-resource.sh
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/clean-k8s-resource.sh
+
+    辅助脚本3: 
+    stop-k8s-master.sh
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/stop-k8s-master.sh
 
     程序包: domeos-k8s-master.tar.gz 
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/domeos-k8s-master.tar.gz ，包含: flanneld, mk-docker-opts.sh, kube-apiserver, kube-controller-manager, kube-scheduler, kube-proxy
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/domeos-k8s-master.tar.gz ，包含: flanneld, mk-docker-opts.sh, kube-apiserver, kube-controller-manager, kube-scheduler, kube-proxy，kubectl
 
 说明:
   1. 脚本会对hostname进行检查，如果不符合DNS规范，请通过change_hostname.sh脚本对主机hostname进行修改。
-  2. 脚本中仅有安装docker时需要连接互联网，如果所在主机无法访问外网，可先本地安装完docker后再执行该脚本。
+  2. 脚本中仅有安装docker时需要连接互联网，下载domeos-k8s-master.tar.gz需要连接互联网。如果所在主机无法访问外网，可先将domeos-k8s-master.tar.gz放到脚本所在目录，注释脚本中下载domeos-k8s-master.tar.gz的语句，并在本地安装完docker后再执行该脚本。
   3. 脚本成功执行后，将以systemctl的形式启动如下服务: flanneld, docker, kube-apiserver, kube-controller-manager, kube-scheduler, kube-proxy
-  4. 摘除master可按如下顺序停止各组件: kube-proxy -> kube-scheduler -> kube-controller-manager -> kube-apiserver -> docker -> flannel
+  4. 通过运行stop-k8s-master.sh可摘除master，docker和flannel也会被停止；如果需要在摘除前清理所有kubernetes启动的资源，可运行clean-k8s-resource.sh。
   5. --service-cluster-ip-range和--flannel-network-ip-range地址段不能有重叠
 
 参数说明:
@@ -120,6 +147,16 @@
   2. 最全参数
 
           sudo sh start_master_centos.sh --kube-apiserver-port 8080 --etcd-servers http://10.11.151.97:4012,http://10.11.151.100:4012,http://10.11.151.101:4012 --service-cluster-ip-range 172.16.0.0/13 --flannel-network-ip-range 172.24.0.0/13 --flannel-subnet-len 22 --cluster-dns 172.16.40.1 --cluster-domain domeos.local --insecure-bind-address 0.0.0.0 --insecure-port 8080 --secure-bind-address 0.0.0.0 --secure-port 6443 --authorization-mode ABAC --authorization-policy-file /opt/domeos/openxxs/k8s-1.1.7-flannel/authorization --basic-auth-file /opt/domeos/openxxs/k8s-1.1.7-flannel/authentication.csv --docker-graph-path /opt/domeos/openxxs/docker --insecure-docker-registry 10.11.150.76:5000 --secure-docker-registry https://private-registry.sohucs.com --docker-registry-crt /opt/domeos/openxxs/k8s-1.1.7-flannel/registry.crt
+
+测试:
+
+通过"kubectl cluster-info"查看Kubernetes Master的状态，如果显示"Kubernetes master is running at http://localhost:8080 " 说明正常运行。
+
+参考：
+
+1. Kubernetes官方文档：http://kubernetes.io
+2. Docker RPM包下载地址：https://yum.dockerproject.org/repo/main/centos/7/Packages/
+
 
 **步骤3：配置和启动docker registry**
 
