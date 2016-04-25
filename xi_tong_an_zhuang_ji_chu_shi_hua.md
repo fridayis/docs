@@ -4,16 +4,18 @@
  
 安装组件的镜像下载地址（更新于2016-04-25）：
 
-| 安装组件| 镜像地址 |
+| 安装组件| 镜像地址 | github项目地址 |
 | -- | -- |
-| 私有仓库 | pub.domeos.org/domeos/docker-registry-driver-sohustorage:1.0 |
-| skyDNS | pub.domeos.org/domeos/skydns:1.5|
-| kube2sky | pub.domeos.org/domeos/kube2sky:0.4 |
-| agent | pub.domeos.org/domeos/agent:2.4|
-| transfer | pub.domeos.org/domeos/transfer:0.0.15 |
-| graph | pub.domeos.org/domeos/graph:0.5.7 |
-| query | pub.domeos.org/domeos/query:1.5.1 |
-| DomeOS server | pub.domeos.org/domeos/server:1.2.3 |
+| 私有仓库 | pub.domeos.org/domeos/docker-registry-driver-sohustorage:1.0 | https://github.com/domeos/registry |
+| skyDNS | pub.domeos.org/domeos/skydns:1.5|https://github.com/domeos/domedns.git |
+| kube2sky | pub.domeos.org/domeos/kube2sky:0.4 | https://github.com/domeos/kube2sky.git |
+| agent | pub.domeos.org/domeos/agent:2.4| https://github.com/domeos/agent.git |
+| transfer | pub.domeos.org/domeos/transfer:0.0.15 | https://github.com/open-falcon/transfer.git |
+| graph | pub.domeos.org/domeos/graph:0.5.7 | https://github.com/open-falcon/graph.git | 
+| query | pub.domeos.org/domeos/query:1.5.1 | https://github.com/open-falcon/query.git |
+| DomeOS server | pub.domeos.org/domeos/server:1.2.3 | https://github.com/domeos/server.git |
+| Webssh server | pub.domeos.org/domeos/shellinabox:1.0 | https://github.com/domeos/shellinabox.git |
+| Build image | pub.domeos.org/domeos/build:0.2.1 | https://github.com/domeos/imagebuilder.git |
 
 安装步骤：
 
