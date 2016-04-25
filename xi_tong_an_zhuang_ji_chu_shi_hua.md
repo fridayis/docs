@@ -193,20 +193,42 @@
 样例:
   
     sudo docker run --restart=always -d -p 5000:5000 -e REGISTRY_STORAGE_SOHUSTORAGE_ACCESSKEY=f5ynwwOZ2k2yT4+qxzmA6A== -e REGISTRY_STORAGE_SOHUSTORAGE_SECRETKEY=MUC9NeF8vXvt0y2f+6dIXA== -e REGISTRY_STORAGE_SOHUSTORAGE_REGION=bjcnc -e REGISTRY_STORAGE_SOHUSTORAGE_BUCKET=registry --name private-registry pub.domeos.org/domeos/docker-registry-driver-sohustorage:1.0
+
+测试:
+通过" curl -L http://[ registry 的服务地址]/v2/  "查看docker registry的运行状态，如果显示"{}"说明正常运行，如:
+
+    ===============================
+    command: curl -L http://10.11.150.76:5000/v2/
+    result : {}
+    ===============================
+
+参考:
+  
+  registry官方文档:https://hub.docker.com/_/registry/
+
+
 **步骤4：配置和启动MySQL，并创建所需数据库和表结构**
 
-数据库: domeos, graph
+数据库: 
+    
+domeos, graph
+
+地址：https://github.com/domeos/server/blob/v0.2-beta/DomeOS/src/main/resources/1.create-database.sh
 
 表结构: 
       
-    create-db.sql, graph-db-schema.sql 
+1. domeos
+        
+  地址：https://github.com/domeos/server/blob/v0.2-beta/DomeOS/src/main/resources/create-db.sql
 
-下载地址：https://github.com/domeos/server/tree/master/DomeOS/src/main/resources
+2. graph
+
+  地址：https://github.com/domeos/server/blob/v0.2-beta/DomeOS/src/main/resources/graph-db-schema.sql
 
 初始用户: 
 
     insert-data.sql 
-下载地址：https://github.com/domeos/server/tree/master/DomeOS/src/main/resources ，会创建一个DomeOS系统的管理员用户，用户名：admin   ，密码:admin
+地址：https://github.com/domeos/server/blob/v0.2-beta/DomeOS/src/main/resources/insert-data.sql ，会创建一个DomeOS系统的管理员用户，用户名：admin   ，密码:admin
 
 说明: 
 
@@ -217,22 +239,22 @@
 启动方式: docker容器
 
 镜像: 
-  1. graph: pub.domeos.org/domeos/falcon-graph:0.5.6
-  2. transfer: pub.domeos.org/domeos/falcon-transfer:0.0.14
-  3. query: pub.domeos.org/domeos/falcon-query:1.4.3
+  1. graph: pub.domeos.org/domeos/falcon-graph:0.5.7
+  2. transfer: pub.domeos.org/domeos/falcon-transfer:0.0.15
+  3. query: pub.domeos.org/domeos/falcon-query:1.5.1
 
 命令:
 
 1. graph: 
 
-        sudo docker run -d -v <_graph>:/home/work/data/6070 -e DB_DSN="\"<_graph_db_user>:<_graph_db_passwd>@tcp(<_graph_db_addr>)/graph?loc=Local&parseTime=true\"" --name graph -p <_graph_http_port>:6070 -p <_graph_rpc_port>:6071 --restart=always pub.domeos.org/domeos/falcon-graph:0.5.6
+        sudo docker run -d -v <_graph>:/home/work/data/6070 -e DB_DSN="\"<_graph_db_user>:<_graph_db_passwd>@tcp(<_graph_db_addr>)/graph?loc=Local&parseTime=true\"" --name graph -p <_graph_rpc_port>:6070 -p <_graph_http_port>:6071 --restart=always pub.domeos.org/domeos/falcon-graph:0.5.7
 
 2. transfer: 
 
-        sudo docker run -d -e JUDGE_ENABLE="false" -e GRAPH_CLUSTER=<_graph_cluster> -p <_transfer_port>:8433 --name transfer --restart=always pub.domeos.org/domeos/falcon-transfer:0.0.14
+        sudo docker run -d -e JUDGE_ENABLE="false" -e GRAPH_CLUSTER=<_graph_cluster> -p <_transfer_port>:8433 --name transfer --restart=always pub.domeos.org/domeos/falcon-transfer:0.0.15
 
 3. query: 
-        sudo docker run -d -e GRAPH_CLUSTER=<_graph_cluster> -p <_query_port>:9966 --name query --restart=always pub.domeos.org/domeos/falcon-query:1.4.3
+        sudo docker run -d -e GRAPH_CLUSTER=<_graph_cluster> -p <_query_port>:9966 --name query --restart=always pub.domeos.org/domeos/falcon-query:1.5.1
 
 参数说明:
   
@@ -253,63 +275,125 @@
   _transfer_port: transfer服务端口。
   
   _query_port: query服务端口。
-  
-
-  _graph_db_host:
-  
-  _graph_db_port:
-  
-  _graph_db_user:
-  
-  _graph_db_passwd: 
-  
-  以上4个配置参数为服务于graph的MySQL数据库的相关参数。
-  
-  _query_addr: query服务地址，格式必须为http://< ip >:< port >
-  
-
+   
 说明:
   1. 参数中需要转义双引号的地方不能省略。
   2. transfer和graph可以启动多个。
   3. transfer和query的GRAPH_CLUSTER参数必须完全一致。
-  4. 监控系统是在open-falcon基础上扩展而来，graph、transfer、query三个组件未做修改，详细配置可参考http://book.open-falcon.com/zh/install_from_src/agent.html
+  4. 监控系统是在open-falcon基础上扩展而来，graph、transfer、query三个组件未做修改，详细配置可参考Open-Falcon官方文档：http://book.open-falcon.org/zh/intro/index.html
 
 样例: 
 
   1. graph: 
         
-          sudo docker run -d -v /opt/my/data:/home/work/data/6070 -e DB_DSN="\"domeos:xxxx@tcp(10.11.10.10:3307)/graph?loc=Local&parseTime=true\"" --name graph -p 6070:6070 -p 6071:6071 --restart=always pub.domeos.org/domeos/falcon-graph:0.5.6
+          sudo docker run -d -v /opt/my/data:/home/work/data/6070 -e DB_DSN="\"domeos:xxxx@tcp(10.11.10.10:3307)/graph?loc=Local&parseTime=true\"" --name graph -p 6070:6070 -p 6071:6071 --restart=always pub.domeos.org/domeos/falcon-graph:0.5.7
 
   2. transfer: 
   
-          sudo docker run -d -e JUDGE_ENABLE="false" -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 8433:8433 --name transfer --restart=always pub.domeos.org/domeos/falcon-transfer:0.0.14
+          sudo docker run -d -e JUDGE_ENABLE="false" -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 8433:8433 --name transfer --restart=always pub.domeos.org/domeos/falcon-transfer:0.0.15
 
   3. query: 
   
-          sudo docker run -d -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 9967:9966 --name query --restart=always pub.domeos.org/domeos/falcon-query:1.4.3
+          sudo docker run -d -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 9967:9966 --name query --restart=always pub.domeos.org/domeos/falcon-query:1.5.1
+    
+测试:
 
-**步骤6：配置和启动WebSSH组件**
+通过" curl -s [graph/transfer/query的服务地址]/health "查看graph/transfer/query的运行状态，如果返回"ok"说明graph/transfer/query正常运行，注意graph中使用的是_graph_http_port端口，如:
+
+    ===============================
+    command: curl -s 10.11.54.13:6071/health
+    result : ok
+    ===============================
+
+**步骤6： 配置和启动DomeOS Server**
+
+非容器方式:
+
+源码: domeos/server 
+（https://github.com/domeos/server/tree/v0.2-beta/DomeOS ）
+
+说明:
+1. 编译打包后设置如下环境变量再启动tomcat服务即可
+      MYSQL_HOST: MySQL服务器的地址
+      MYSQL_PORT: MySQL服务端口
+      MYSQL_USERNAME: 用于登录MySQL服务器的用户名
+      MYSQL_PASSWORD: 用于登录MySQL服务器的密码
+      MYSQL_DB: DomeOS使用的数据库名
+2. 以非容器形式启动DomeOS Server需要单独启动WebSSH Server，具体启动方式见步骤7
+
+容器方式:
+  
+镜像: pub.domeos.org/domeos/server:1.2.3
+  
+命令: 
+      
+    sudo docker run -d --restart=always --name <_domeos_server_name> -p <_domeos_server_port>:8080 -e MYSQL_HOST=<_mysql_host> -e MYSQL_PORT=<_mysql_port> -e MYSQL_USERNAME=<_mysql_username> MYSQL_PASSWORD=<_mysql_password> MYSQL_DB=<_mysql_db> pub.domeos.org/domeos/server:1.2.3
+  
+参数说明:
+
+_domeos_server_name: 容器的名字。
+    
+_domeos_server_port: DomeOS Server的服务端口。
+    
+_mysql_host: MySQL服务器的地址。
+
+_mysql_port: MySQL服务端口。
+
+_mysql_username: 用于登录MySQL服务器的用户名。
+
+_mysql_password: 用于登录MySQL服务器的密码。
+
+_mysql_db: DomeOS使用的数据库名，即步骤4中的domeos数据库。
+
+样例:
+  
+    sudo docker run -d --restart=always --name domeos_server -e MYSQL_HOST=10.16.42.199 -e MYSQL_PORT=3307 -e MYSQL_USERNAME=root -e MYSQL_PASSWORD=mypassword MYSQL_DB=domeos -p 8080:8080 pub.domeos.org/domeos/server:1.2.3
+
+测试:
+
+在浏览器中访问DomeOS Server服务地址，并通过普通账户->admin账户(初始密码admin)进行登录，登录成功说明DomeOS服务正常。
+
+**步骤7：配置和启动WebSSH组件**
 
 启动方式: docker容器
 
 镜像: pub.domeos.org/domeos/shellinabox:1.0
 
-命令: sudo docker run -d --restart=always -p <_port>:4200 --name shellinabox pub.domeos.org/domeos/shellinabox:1.0
+命令: 
+
+    sudo docker run -d --restart=always -p <_port>:4200 --name shellinabox pub.domeos.org/domeos/shellinabox:1.0
 
 参数说明:
-  _port: 服务端口。
+
+_port:WebSSH服务端口。
+
+说明: 
+
+以非容器方式启动DomeOS Server时需要单独启动WebSSH Server，容器方式已经将WebSSH Server集成进镜像中不再需要单独启动WebSSH Server。
 
 样例:
 
     sudo docker run -d --restart=always -p 4200:4200 --name shellinabox pub.domeos.org/domeos/shellinabox:1.0
 
-**步骤7： 配置和启动DomeOS Server**
+测试:
 
-源码: domeos/server 
+通过"curl -s [WebSSH服务地址]"查看WebSSH服务状态，如果返回了一个"File Not Found"的页面信息而不是返回空，说明WebSSH服务运行正常，如:
+  
+    command: curl -s 10.11.151.97:4200
+    result :
+      <?xml version="1.0" encoding="utf-8"?>
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xml:lang="en" lang="en">
+      <head>
+      <title>404 File Not Found</title>
+      </head>
+      <body>
+      File Not Found
+      </body>
+      </html>
 
-下载地址：https://github.com/domeos/server
-
-说明: 编译打包后启动tomcat服务。
+参考:
+  shellinabox项目地址:https://github.com/domeos/shellinabox
 
 **步骤8：DomeOS系统录入参数**
 
@@ -319,42 +403,51 @@
 
 在全局配置页面完成各个组件的地址填写：
 
-1. 全局配置->"私有仓库"->私有仓库地址
+1. 全局配置->"LDAP"->OpenLDAP服务器地址
+   
+   OpenLDAP的服务地址以及端口号，样例: ldap://ldap.sohu-inc.com  389
+2. 全局配置->"LDAP"->email后缀
+   
+   OpenLDAP登录时的E-mail后缀，样例: @sohu-inc.com
+3. 全局配置->"代码仓库"->代码仓库地址
+   
+   GitLab的地址，样例: http://code.sohuno.com
+2. 全局配置->"私有仓库"->私有仓库地址
     
     Docker registry的地址，样例：        http://10.11.150.76:5000 
     如果使用https访问的私有仓库，则勾选"https"并将registry.crt证书文件内容粘贴至"证书信息"中
 2. 全局配置->"服务器"->服务器地址
     
     DomeOS Server的地址，样例：http://10.11.150.76:8080
-3. 全局配置->"监控配置"-> 控制台地址
-    
-    dashboard服务地址，样例： http://10.11.150.76:8081
-4. 全局配置->"监控配置"-> transfer
+3. 全局配置->"监控配置"-> transfer
     
     transfer服务地址，样例：10.11.150.76:8082
-5. 全局配置->"监控配置"-> graph
+4. 全局配置->"监控配置"-> graph
     
     graph服务地址，样例：10.11.150.76:8083
-6. 全局配置->"监控配置"-> query
+5. 全局配置->"监控配置"-> query
     
     query服务地址，样例：10.11.150.76:8084
-7. 全局配置->"Web SSH"->Web SSH服务地址
+6. 全局配置->"Web SSH"->Web SSH服务地址
     
-    WebSSH服务地址，样例：http://10.11.150.76:8085
+    如果DomeOS Server以非容器方式启动，则这项设置为单独启动的WebSSH服务地址，样例:http://10.11.150.76:4200
+    
+    如果DomeOS Server以容器方式启动，则WebSSH服务地址必须设置为: http://localhost:4200
+
 
 在集群管理页面把已经启动的kubernetes集群添加进来。
 
-1. 集群管理->管理->集群设置->编辑->api server
+1. 集群管理->新建集群->api server
     
     kube-apiserver服务地址，样例：10.16.42.200:8080
-2. 集群管理->管理->集群设置->编辑->dns服务器
+2. 集群管理->新建集群->dns服务器
     
-    kubernetes集群内DNS服务地址，样例：172.16.40.1
-3. 集群管理->管理->集群设置->编辑->etcd
+    kubernetes集群内DNS服务地址，注意不能添加端口号，样例：172.16.40.1
+3. 集群管理->新建集群->etcd
     
     ETCD集群服务地址，注意必须加http前缀 ，样例：http://10.16.42.200:8080
   
-4. 集群管理->管理->集群设置->编辑->domain
+4. 集群管理->新建集群->domain
     
     kubernetes集群内DNS服务search域，样例：domeos.local
 
@@ -380,28 +473,36 @@
       
 下载地址：http://domeos-script.bjctc.scs.sohucs.com/start_node_centos.sh
 
-辅助脚本: 
+辅助脚本1: 
         
      change_hostname.sh 
 
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/change_hostname.sh
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/change_hostname.sh
+
+辅助脚本2: 
+        
+     stop-k8s-node.sh
+
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/stop-k8s-node.sh
 
 程序包: 
 
      domeos-k8s-node.tar.gz 
 
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/domeos-k8s-node.tar.gz ，包含: flanneld, mk-docker-opts.sh, kube-proxy, kubelet, kubectl
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/domeos-k8s-node.tar.gz，包含: flanneld, mk-docker-opts.sh, kube-proxy, kubelet, kubectl
 
-镜像: pub.domeos.org/domeos/agent:2.3
+镜像: 
+
+pub.domeos.org/domeos/agent:2.4
 
 说明:
   1. 脚本会对hostname进行检查，如果不符合DNS规范，请通过change_hostname.sh脚本对主机hostname进行修改。
   2. 在DomeOS系统中node包含标签PRODENV=HOSTENVTYPE表示可用于生产环境；包含标签TESTENV=HOSTENVTYPE表示可用于测试环境；包含标签BUILDENV=HOSTENVTYPE表示可用于构建镜像。
   3. 在添加node时集群的DNS服务可不启动。
-  4. 脚本中安装docker时需要连接互联网，如果所在主机无法访问外网，需要先在本地安装完docker，并将镜像pub.domeos.org/domeos/agent:2.0上传至私有仓库中，同时修改脚本第15步中该镜像对应的名称，再执行该脚本。
-  5. 如果设置了私有仓库以https的方式访问，则脚本会从DomeOS Server上下载证书文件，registry.crt，因此需要当前主机可访问DomeOS Server。如果不能访问，则需要将registry.crt文件放置到脚本所在目录，并修改脚本中第7步的"TODO domeos offline"部分。
+  4. 脚本中安装docker时需要连接互联网，下载domeos-k8s-node.tar.gz需要连接互联网。如果所在主机无法访问外网，可先将domeos-k8s-node.tar.gz放到脚本所在目录，注释脚本中下载domeos-k8s-node.tar.gz的语句；在本地安装完docker；将镜像pub.domeos.org/domeos/agent:2.4上传至私有仓库中，同时修改脚本第15步中该镜像对应的名称；最后执行该脚本。
+  5. 如果设置了私有仓库以https的方式访问，则脚本会从DomeOS Server上下载证书文件，registry.crt，因此需要当前主机可访问DomeOS Server。如果不能访问，则需要将registry.crt文件放置到脚本所在目录，并修改脚本中第10步的"TODO domeos offline"部分。
   6. 脚本成功执行后，将以systemctl的形式启动flanneld、docker、kube-proxy、kubelet，将以docker容器形式启动用于监控的agent，并为该结点打上指定的标签。
-  7. 摘除node可按如下顺序停止: agent -> kubelet -> kube-proxy -> docker -> flanneld
+  7. 通过运行stop-k8s-node.sh可摘除node，运行在该节点上的所有容器被停止，docker和flannel也会被停止。
 
 参数说明:
   
@@ -421,7 +522,7 @@
   
   --registry-arg: 私有仓库的地址，可以为域名地址。**必需**
   
-  --domeos-server: DomeOS Server服务地址。必需
+  --domeos-server: DomeOS Server服务地址。当--registry-type为https时必需
   
   --etcd-server: ETCD集群服务地址，各个地址间以逗号分隔。**必需**
   
@@ -431,6 +532,21 @@
 
       sudo sh start_node_centos.sh --api-server http://10.16.42.200:8080 --cluster-dns 172.16.40.1 --cluster-domain domeos.local --monitor-transfer 10.16.42.198:8433,10.16.42.199:8433 --docker-graph-path /opt/domeos/openxxs/docker-graph --docker-log-level warn --registry-type http --registry-arg 10.11.150.76:5000 --domeos-server 10.11.150.76:8080 --etcd-server http://10.16.42.200:4012 --node-labels TESTENV=HOSTENVTYPE,PRODENV=HOSTENVTYPE
 
+测试:
+
+通过" kubectl --server [kube-apiserver的服务地址] get node "查看集群的node节点状态，如果显示了该结点并且状态为"Ready"，则说明node节点添加成功，如:
+  
+    command: kubectl --server 10.16.42.200:8080 get nodes
+    result :
+      NAME         STATUS    AGE
+      tc-151-100   Ready     25d
+
+参考:
+
+Kubernetes官方文档:http://kubernetes.io
+
+Docker RPM包下载地址:https://yum.dockerproject.org/repo/main/centos/7/Packages/
+
 **步骤10：创建kubernetes集群内DNS服务**
 
 启动方式: kubernetes service形式
@@ -439,15 +555,15 @@
 
      dns.yaml 
      
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/dns.yaml
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/dns.yaml
 
 执行文件: 
      
      kubectl
 
 镜像: 
-1. pub.domeos.org/domeos/skydns:1.4
-2. pub.domeos.org/domeos/kube2sky:0.3
+1. pub.domeos.org/domeos/skydns:1.5
+2. pub.domeos.org/domeos/kube2sky:0.4
 
 命令: 
 
