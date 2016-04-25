@@ -341,7 +341,7 @@
 
      start_node_centos.sh 
       
-下载地址：http://deploy-domeos.bjcnc.scs.sohucs.com/start_node_centos.sh
+下载地址：http://domeos-script.bjctc.scs.sohucs.com/start_node_centos.sh
 
 辅助脚本: 
         
