@@ -247,14 +247,14 @@ domeos, graph
 
 1. graph: 
 
-        sudo docker run -d -v <_graph>:/home/work/data/6070 -e DB_DSN="\"<_graph_db_user>:<_graph_db_passwd>@tcp(<_graph_db_addr>)/graph?loc=Local&parseTime=true\"" --name graph -p <_graph_rpc_port>:6070 -p <_graph_http_port>:6071 --restart=always pub.domeos.org/domeos/falcon-graph:0.5.7
+        sudo docker run -d -v <_graph>:/home/work/data/6070 -e DB_DSN="\"<_graph_db_user>:<_graph_db_passwd>@tcp(<_graph_db_addr>)/graph?loc=Local&parseTime=true\"" --name graph -p <_graph_rpc_port>:6070 -p <_graph_http_port>:6071 --restart=always pub.domeos.org/domeos/graph:0.5.7
 
 2. transfer: 
 
-        sudo docker run -d -e JUDGE_ENABLE="false" -e GRAPH_CLUSTER=<_graph_cluster> -p <_transfer_port>:8433 --name transfer --restart=always pub.domeos.org/domeos/falcon-transfer:0.0.15
+        sudo docker run -d -e JUDGE_ENABLE="false" -e GRAPH_CLUSTER=<_graph_cluster> -p <_transfer_port>:8433 --name transfer --restart=always pub.domeos.org/domeos/transfer:0.0.15
 
 3. query: 
-        sudo docker run -d -e GRAPH_CLUSTER=<_graph_cluster> -p <_query_port>:9966 --name query --restart=always pub.domeos.org/domeos/falcon-query:1.5.1
+        sudo docker run -d -e GRAPH_CLUSTER=<_graph_cluster> -p <_query_port>:9966 --name query --restart=always pub.domeos.org/domeos/query:1.5.1
 
 参数说明:
   
@@ -286,15 +286,15 @@ domeos, graph
 
   1. graph: 
         
-          sudo docker run -d -v /opt/my/data:/home/work/data/6070 -e DB_DSN="\"domeos:xxxx@tcp(10.11.10.10:3307)/graph?loc=Local&parseTime=true\"" --name graph -p 6070:6070 -p 6071:6071 --restart=always pub.domeos.org/domeos/falcon-graph:0.5.7
+          sudo docker run -d -v /opt/my/data:/home/work/data/6070 -e DB_DSN="\"domeos:xxxx@tcp(10.11.10.10:3307)/graph?loc=Local&parseTime=true\"" --name graph -p 6070:6070 -p 6071:6071 --restart=always pub.domeos.org/domeos/graph:0.5.7
 
   2. transfer: 
   
-          sudo docker run -d -e JUDGE_ENABLE="false" -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 8433:8433 --name transfer --restart=always pub.domeos.org/domeos/falcon-transfer:0.0.15
+          sudo docker run -d -e JUDGE_ENABLE="false" -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 8433:8433 --name transfer --restart=always pub.domeos.org/domeos/transfer:0.0.15
 
   3. query: 
   
-          sudo docker run -d -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 9967:9966 --name query --restart=always pub.domeos.org/domeos/falcon-query:1.5.1
+          sudo docker run -d -e GRAPH_CLUSTER="\"node-00\":\"10.11.54.13:6070\",\"node-01\":\"10.11.54.14:6070\"" -p 9967:9966 --name query --restart=always pub.domeos.org/domeos/query:1.5.1
     
 测试:
 
